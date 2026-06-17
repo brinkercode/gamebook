@@ -9,7 +9,7 @@ paths:
 
 ## Stack
 
-- **Unreal Engine 5.4+** — C++17 standard. No deprecated UE4 patterns in new code.
+- **Unreal Engine 5.7+** — C++17 standard. No deprecated UE4 patterns in new code.
 - **Build system** — Unreal Build Tool (UBT). Module dependencies declared in `<Module>.Build.cs`.
 - **Live Coding** — hot reload for source changes during editor sessions. Rules below keep it stable.
 - **Clang on Linux/macOS, MSVC on Windows** — code must compile clean on both.

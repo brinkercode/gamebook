@@ -1,6 +1,6 @@
 # Gamebook
 
-> Opinionated UE5 game dev playbook for shipping vertical slices with [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Unreal Engine 5.4+, C++ + Blueprints, Gameplay Ability System (GAS), Enhanced Input, Wwise (MetaSounds fallback), Niagara, UMG + Common UI, Git LFS, single-player default with opt-in dedicated server. Multi-agent orchestration with real, file-based handoffs.
+> Opinionated UE5 game dev playbook for shipping vertical slices with [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Unreal Engine 5.7+, C++ + Blueprints, Gameplay Ability System (GAS), Enhanced Input, Wwise (MetaSounds fallback), Niagara, UMG + Common UI, Git LFS, single-player default with opt-in dedicated server. Multi-agent orchestration with real, file-based handoffs.
 
 The gamebook is the game-dev twin of [godbook](../godbook/) — same orchestration shape, same hooks, same `/ship` + `/fix` shape — but the agents, rules, skills, and guides are rewritten for UE5. Where godbook coordinates a backend API and a React frontend, the gamebook coordinates a C++ systems layer (GAS abilities, attribute sets, subsystems) and a Blueprint/content layer (UMG widgets, Niagara, Wwise hookup, level scripting). The systems→content boundary is the same shape as godbook's backend→frontend boundary — a real `.claude/handoffs/systems.json` file gates the content pass.
 
@@ -70,7 +70,7 @@ Run the project-scaffolder agent. <new UE5 project | existing .uproject at ~/pat
 
 The agent drives `AskUserQuestion` for every choice (locked decisions are not asked — see [CLAUDE.md](CLAUDE.md)):
 
-- **Engine version**: UE5.4 · 5.5 · 5.6+
+- **Engine version**: UE5.7+
 - **Audio**: Wwise (default) · MetaSounds only
 - **Networking**: single-player (default) · dedicated server · listen server
 - **Monetization**: none · Steam MicroTxn · EOS Ecom · console store · combination
@@ -89,7 +89,7 @@ The scaffolder runs `gamebook-init.sh` for you. Or run it yourself:
 mkdir my-game && cd my-game
 git init
 bash ~/.claude/gamebook/scripts/gamebook-init.sh \
-  --name "MyGame" --desc "What it is" --engine 5.4
+  --name "MyGame" --desc "What it is" --engine 5.7
 ```
 
 That creates `Source/{MyGame,MyGameEditor,MyGameTests}/`, `Content/{Core,Characters,Weapons,Levels,UI,VFX,Audio,Data}/`, `Config/Default*.ini`, `Plugins/`, `.gitattributes` (full UE LFS list), `.gitignore`, `Makefile`, `CLAUDE.md`, `docs/` stubs, and `.claude/` with hooks + agents + skills + rules wired back to the gamebook.
@@ -170,7 +170,7 @@ The interview captures every choice in `project.config.json`. Locked decisions (
 
 | Layer | Options (default first) |
 |---|---|
-| Engine | **UE5.4** · UE5.5 · UE5.6+ |
+| Engine | **UE5.7+** |
 | Language | C++ + Blueprints (both required) |
 | Ability framework | **GAS** (locked) |
 | Input | **Enhanced Input** (locked) |

@@ -8,7 +8,7 @@
 
 | Layer | Technology |
 |-------|------------|
-| Language | C++ (MSVC or Clang, UE5.4+) |
+| Language | C++ (MSVC or Clang, UE5.7+) |
 | Ability framework | Gameplay Ability System (GAS) |
 | Input | Enhanced Input plugin |
 | Async | UE `AsyncTask`, `FTimerHandle`, `UE5Coro` (opt-in) |

@@ -46,7 +46,7 @@ There is no self-hosted CI runner; `make gate` runs locally before push. Per the
 ### Engine + IDE
 - [ ] **Epic Games Launcher** — https://epicgames.com/launcher
 - [ ] **Unreal Engine {{ENGINE_VERSION}}** via the launcher
-- [ ] System env var `UE_ROOT` = `C:\Program Files\Epic Games\UE_5.4` (or your install path)
+- [ ] System env var `UE_ROOT` = `C:\Program Files\Epic Games\UE_5.7` (or your install path)
 - [ ] IDE — pick one:
   - **JetBrains Rider for Unreal** ($149/yr indie) — recommended for C++ ergonomics
   - **Visual Studio 2022 Community** (free) with workload "Game Development with C++" + Unreal Engine integration

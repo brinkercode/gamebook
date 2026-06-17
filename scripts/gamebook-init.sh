@@ -5,7 +5,7 @@
 # Usage:
 #   bash ~/.claude/gamebook/scripts/gamebook-init.sh \
 #     [--name NAME] [--desc DESC] \
-#     [--ue-version 5.4|5.5] [--wwise] [--multiplayer]
+#     [--ue-version 5.7+] [--wwise] [--multiplayer]
 #
 # Run from inside the empty (or partial) project directory.
 
@@ -17,7 +17,7 @@ ROOT="$(pwd)"
 
 NAME=""
 DESC=""
-UE_VERSION="5.4"
+UE_VERSION="5.7"
 WWISE=1
 MULTIPLAYER=0
 

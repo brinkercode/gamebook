@@ -31,7 +31,7 @@ You are orchestrating a feature build using gamebook's systems→content sequent
    Do **not** infer choices yourself. Do **not** spawn the scaffolder automatically.
 
 2. **Load engine context.** Read `project.config.json` and extract:
-   - `ENGINE_VER`     = `.stack.engine`            (e.g. `5.4`)
+   - `ENGINE_VER`     = `.stack.engine`            (e.g. `5.7`)
    - `ABILITY_FW`     = `.stack.abilities`         (e.g. `GAS`)
    - `AUDIO_MW`       = `.stack.audio`             (e.g. `Wwise`, `MetaSounds`)
    - `MULTIPLAYER`    = `.stack.networking.mode`   (e.g. `single-player`, `dedicated-server`)
@@ -69,7 +69,7 @@ Spawn `gameplay-systems-engineer` and `playtest-architect` in a **single message
 
 ```yaml
 context:
-  engine_version: <ENGINE_VER>         # 5.4|5.5|...
+  engine_version: <ENGINE_VER>         # 5.7+
   abilities: <ABILITY_FW>              # GAS
   audio: <AUDIO_MW>                    # Wwise|MetaSounds
   networking_mode: <MULTIPLAYER>       # single-player|dedicated-server

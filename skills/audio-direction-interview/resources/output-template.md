@@ -18,7 +18,7 @@
 
 **Wwise Spatial Audio:** {{ Enabled / Disabled }}
 
-**Version pinned in:** `Plugins/Wwise/` — match UE5.4 integration build
+**Version pinned in:** `Plugins/Wwise/` — match installed UE version integration build
 
 ## Music
 

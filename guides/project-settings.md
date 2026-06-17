@@ -9,7 +9,7 @@
 ```json
 {
     "FileVersion": 3,
-    "EngineAssociation": "5.4",
+    "EngineAssociation": "5.7",
     "Category": "",
     "Description": "",
     "Modules": [
@@ -307,7 +307,7 @@ Commit: `Config/`, `Content/`, `Source/`, `Plugins/`, `.uproject`, `.gitattribut
 
 ## Key Rules
 
-1. **`EngineAssociation` pinned to `"5.4"`** — prevents accidental engine upgrades that break the team.
+1. **`EngineAssociation` pinned to `"5.7"`** — prevents accidental engine upgrades that break the team.
 2. **Disabled plugins listed explicitly** — UBT skips them, reducing compile time and Editor startup.
 3. **Nanite and Lumen off by default** — GTX 1060 baseline. Re-evaluate post-vertical-slice.
 4. **`r.DefaultFeature.AntiAliasing=2` (TAA)** — stable on all target hardware. DLSS/TSR requires higher-end hardware.

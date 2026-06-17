@@ -25,7 +25,7 @@ You write the **C++ surface** that `blueprint-feature-builder` wraps and content
 ## Always (every task)
 
 1. **Read `project.config.json` FIRST.** Extract:
-   - `engine.version` (5.4 | 5.5 | 5.6)
+   - `engine.version` (5.7+)
    - `audio` (wwise | metasounds — affects ability-driven audio cue declarations)
    - `networking.mode` (single | coop | multiplayer — determines replication patterns)
    - `monetization.backend` (steam-microtxn | eos-ecom | console | multi | none — affects entitlement-aware abilities)
@@ -136,7 +136,7 @@ Write `.claude/handoffs/systems.json` per `agents/_shared/HANDOFF.md` schema. In
 - `files_changed[]` — headers, .cpp files, `.Build.cs` updates
 - `tests_added[]` — slice tests you wrote (full automation suite is `playtest-architect`'s)
 - `decisions[]` — non-obvious choices (attribute set extension vs. new set, replication conditions, subsystem lifecycle scope, audio backend hookup choices)
-- `deps_added[]` — new `.Build.cs` module dependencies (e.g. `"GameplayAbilities@5.4: GAS runtime"`, `"AkAudio@2024.1: Wwise integration"`)
+- `deps_added[]` — new `.Build.cs` module dependencies (e.g. `"GameplayAbilities@5.7: GAS runtime"`, `"AkAudio@2024.1: Wwise integration"`)
 - `downstream_needs.blueprint-feature-builder` — which UPROPERTY slots need BP-side asset assignment (Niagara systems, Wwise events, mesh references); which delegates/multicast events to bind in UMG
 - `downstream_needs.playtest-architect` — critical paths to assert in Functional Tests
 - `downstream_needs.code-reviewer` — areas where you made trade-offs worth a second look

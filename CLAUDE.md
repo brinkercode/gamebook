@@ -1,6 +1,6 @@
 # Gamebook — Claude Code Context
 
-> Opinionated UE5 game-dev playbook for shipping vertical slices with Claude Code. Unreal Engine 5.4+, C++ + Blueprints, GAS, Enhanced Input, Wwise (MetaSounds fallback), Niagara, UMG + Common UI, Git LFS. Single-player default; dedicated-server multiplayer opt-in. Locked decisions are uniform across all projects; per-project framework choices are captured by the scaffolder interview.
+> Opinionated UE5 game-dev playbook for shipping vertical slices with Claude Code. Unreal Engine 5.7+, C++ + Blueprints, GAS, Enhanced Input, Wwise (MetaSounds fallback), Niagara, UMG + Common UI, Git LFS. Single-player default; dedicated-server multiplayer opt-in. Locked decisions are uniform across all projects; per-project framework choices are captured by the scaffolder interview.
 
 This repository IS the playbook. **Start at [PLAYBOOK.md](PLAYBOOK.md)** for the orchestration overview, sizing rubric, and conventions.
 
@@ -38,7 +38,7 @@ There is **no separate security-auditor agent** — security checks are folded i
 
 Not asked by the scaffolder. Edit these here if the entire playbook needs to shift.
 
-- **Engine**: Unreal Engine 5.4+, C++ + Blueprints
+- **Engine**: Unreal Engine 5.7+, C++ + Blueprints
 - **Abilities**: Gameplay Ability System (GAS) — `UGameplayAbility`, `UGameplayEffect`, `UAttributeSet`, `FGameplayTag`
 - **Input**: Enhanced Input plugin (`IA_*`, `IMC_*`, Modifiers, Triggers)
 - **VFX**: Niagara
@@ -57,7 +57,7 @@ Full reference: [agents/_shared/STACK.md](agents/_shared/STACK.md).
 
 | Layer | Options (default first) |
 |---|---|
-| Engine version | **UE5.4** · UE5.5 · UE5.6+ |
+| Engine version | **UE5.7+** |
 | Audio middleware | **Wwise** · MetaSounds only |
 | Networking | **Single-player** · Dedicated server (Replication Graph) · Listen server |
 | Monetization | none · **Steam MicroTxn** · EOS Ecom · console store · combination |

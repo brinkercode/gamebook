@@ -77,7 +77,7 @@ Running the UE5 editor on a headless server is painful — no GPU, no display, n
 ```bash
 # UE5 engine (source build for headless server cook on Linux)
 # Link GitHub account to Epic, then:
-git clone --depth=1 -b 5.4 https://github.com/EpicGames/UnrealEngine.git /opt/UnrealEngine
+git clone --depth=1 -b 5.7 https://github.com/EpicGames/UnrealEngine.git /opt/UnrealEngine
 cd /opt/UnrealEngine
 ./Setup.sh
 ./GenerateProjectFiles.sh
@@ -131,7 +131,7 @@ Point your `gameplay-systems-engineer`-built `URequestReceiptValidation` at `htt
 - Windows 11 or Linux
 
 ### 4.2 Software install
-- **Epic Games Launcher** + Unreal Engine 5.4+ (same version as homelab — version mismatch is the #1 cause of "editor crashes on open")
+- **Epic Games Launcher** + Unreal Engine 5.7+ (same version as homelab — version mismatch is the #1 cause of "editor crashes on open")
 - **Git for Windows** (or system git on Linux) + Git LFS
 - **Visual Studio 2022 Community** (Windows) with Game Development with C++ workload
   - OR **Rider for Unreal Engine** ($149/yr indie) — recommended for C++ ergonomics; same SSH/Git config as VSCode for code parity
@@ -148,7 +148,7 @@ cd <project>
 git lfs pull
 
 # Set UE_ROOT (System Properties → Environment Variables)
-# UE_ROOT = C:\Program Files\Epic Games\UE_5.4
+# UE_ROOT = C:\Program Files\Epic Games\UE_5.7
 ```
 
 ### 4.4 First build + open editor
@@ -259,7 +259,7 @@ The dev-build artifact lands in GitHub Actions; the gaming PC downloads it direc
 
 ## 9. Common pitfalls
 
-**Engine version drift.** Gaming PC on 5.4.2, homelab on 5.4.4 → editor crashes opening project files cooked by the other machine. **Pin the patch version on both, in the launcher and source build.**
+**Engine version drift.** Gaming PC on 5.7.2, homelab on 5.7.4 → editor crashes opening project files cooked by the other machine. **Pin the patch version on both, in the launcher and source build.**
 
 **Git LFS bandwidth surprise.** Fresh clone on the gaming PC consumes a month of GitHub LFS bandwidth. Use a data pack or self-host LFS.
 

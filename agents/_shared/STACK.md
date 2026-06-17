@@ -6,7 +6,7 @@
 
 | Layer | Choice | Notes |
 |---|---|---|
-| **Unreal Engine** | 5.4+ | 5.4 LTS baseline; 5.5/5.6 acceptable. Lock the exact version in `<Project>.uproject` `EngineAssociation`. |
+| **Unreal Engine** | 5.7+ | 5.7 baseline. Lock the exact patch version in `<Project>.uproject` `EngineAssociation`. |
 | **Source** | C++ + Blueprints | C++ for systems/perf-critical paths; BP for content, UI, and rapid iteration. |
 | **Build system** | UnrealBuildTool (UBT) + UnrealHeaderTool | Module `.Build.cs` files under `Source/<Project>{,Editor,Tests}/`. |
 

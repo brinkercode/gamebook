@@ -27,7 +27,7 @@ The **locked decisions** (GAS, Enhanced Input, Niagara, UMG+Common UI, Git LFS, 
 ## Always (every task)
 
 1. Run the `AskUserQuestion`-driven interview FIRST. Persist answers to `project.config.json` in the project root.
-2. Run `bash $GAMEBOOK/scripts/gamebook-init.sh --engine=<5.4|5.5|5.6> --audio=<wwise|metasounds> --net=<single|multi>` with values from `project.config.json`.
+2. Run `bash $GAMEBOOK/scripts/gamebook-init.sh --engine=<5.7> --audio=<wwise|metasounds> --net=<single|multi>` with values from `project.config.json`.
 3. Run `make index` so downstream agents have an accurate `.claude/INDEX.json`.
 4. Before handoff: `make gate` on the empty skeleton — must pass (compiles, opens in editor headless, runs one smoke test).
 
@@ -48,7 +48,7 @@ Use `AskUserQuestion` for every choice. Ask in groups so the user isn't context-
 
 ### Group 2 — engine
 
-- **Unreal Engine version**: 5.4 LTS (default) · 5.5 · 5.6
+- **Unreal Engine version**: 5.7 (default) · 5.5 · 5.6
 - **Source control**: Git + Git LFS (locked — confirmation only)
 
 ### Group 3 — audio
@@ -111,7 +111,7 @@ After the interview, write this file at the project root. **All downstream agent
   "description": "<one-liner>",
   "stack": {
     "engine": {
-      "version": "5.4",
+      "version": "5.7",
       "language": "cpp+blueprint"
     },
     "abilities": "gas",

@@ -3,7 +3,7 @@
 # Runs after Phase 2. Validates "the project cooks," not just "tests pass."
 #
 # Conventions:
-# - UE_ROOT environment variable points to engine directory (e.g., ~/UE_5.4.0)
+# - UE_ROOT environment variable points to engine directory (e.g., ~/UE_5.7.4)
 # - Default map: Content/Levels/MainLevel or Content/Levels/L_Main
 # - Project root: contains .uproject file
 # - Exit 0 = pass. Non-zero = structured JSON to stdout.
@@ -35,10 +35,10 @@ fi
 if [ -z "$UE_ROOT" ]; then
   # Try common install locations
   for candidate in \
-    "$HOME/UE_5.4.0" \
+    "$HOME/UE_5.7.4" \
     "$HOME/UE_5.5.0" \
     "$HOME/UnrealEngine" \
-    "/opt/UnrealEngine/5.4" \
+    "/opt/UnrealEngine/5.7" \
     "/opt/UnrealEngine/5.5"; do
     if [ -f "$candidate/Engine/Build/BatchFiles/RunUAT.sh" ]; then
       UE_ROOT="$candidate"

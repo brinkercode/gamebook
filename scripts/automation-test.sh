@@ -34,10 +34,10 @@ fi
 # Detect UE_ROOT
 if [ -z "$UE_ROOT" ]; then
   for candidate in \
-    "$HOME/UE_5.4.0" \
+    "$HOME/UE_5.7.4" \
     "$HOME/UE_5.5.0" \
     "$HOME/UnrealEngine" \
-    "/opt/UnrealEngine/5.4" \
+    "/opt/UnrealEngine/5.7" \
     "/opt/UnrealEngine/5.5"; do
     if [ -f "$candidate/Engine/Binaries/Linux/UnrealEditor" ]; then
       UE_ROOT="$candidate"

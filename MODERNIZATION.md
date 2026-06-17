@@ -2,7 +2,7 @@
 
 > Port of [godbook](../godbook/) for UE5 game development. June 2026.
 
-The gamebook keeps godbook's orchestration shape, file-based agent handoffs, hook plumbing, `/fix` + `/ship` sizing model, and brain-link memory pattern. The agents, rules, skills, and guides are rewritten end-to-end for Unreal Engine 5.4+ with C++ + Blueprints, GAS, Enhanced Input, Wwise, Niagara, UMG + Common UI, and Git LFS.
+The gamebook keeps godbook's orchestration shape, file-based agent handoffs, hook plumbing, `/fix` + `/ship` sizing model, and brain-link memory pattern. The agents, rules, skills, and guides are rewritten end-to-end for Unreal Engine 5.7+ with C++ + Blueprints, GAS, Enhanced Input, Wwise, Niagara, UMG + Common UI, and Git LFS.
 
 ---
 

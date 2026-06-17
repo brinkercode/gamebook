@@ -114,7 +114,7 @@ Run `make gate STEP=lint && make gate STEP=test` on your slice. Include `gate_re
 Agents ship inside the gamebook repo. `scripts/gamebook-init.sh` **symlinks** `.claude/agents/` to the gamebook copies so updates propagate to all projects automatically.
 
 ```bash
-bash ~/.claude/gamebook/scripts/gamebook-init.sh --name MyFPS --desc "..." --engine 5.4
+bash ~/.claude/gamebook/scripts/gamebook-init.sh --name MyFPS --desc "..." --engine 5.7
 ls .claude/agents   # 8 agent <name>.md files + _shared/ (BRIEF, HANDOFF, PATTERNS, STACK, SECURITY_CHECKLIST) + README.md
 ```
 

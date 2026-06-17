@@ -45,6 +45,6 @@
 19. **Wwise or MetaSounds?** (Wwise is default and mandatory for projects using the narrative state machine. MetaSounds is valid for solo/tiny team with no Wwise license budget — confirm understanding of the trade-offs before changing.)
     - Wwise: professional mixing, RTPC, state machines, Spatial Audio, Wwise Reflect for reverb. Requires Wwise license (free for indie under revenue threshold).
     - MetaSounds: built into UE5, no license, excellent procedural SFX synthesis, limited mixing control vs Wwise.
-20. **If Wwise: what Wwise version?** (Match the integration plugin version to the UE5 version — Wwise 2023.1.x for UE5.4)
+20. **If Wwise: what Wwise version?** (Match the integration plugin version to the UE5 version — match the AudioKinetic plugin to your installed UE version)
 21. **Is Wwise Spatial Audio (room acoustics + portals) needed?** (Yes adds reverb zones, portal occlusion — significant setup but transforms interior audio)
 22. **Mixing philosophy: how should combat audio duck ambience?** (Side-chain ducking on Combat RTPC: ambience Bus -12 dB during combat, recovery 2 seconds after last hit)

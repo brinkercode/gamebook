@@ -1,6 +1,6 @@
 # Gamebook — Playbook
 
-> Opinionated UE5 game-dev playbook for shipping vertical slices with Claude Code. Unreal Engine 5.4+, C++ + Blueprints, GAS, Enhanced Input, Wwise (MetaSounds fallback), Niagara, UMG + Common UI, Git LFS. Single source of truth for orchestration, commands, and conventions.
+> Opinionated UE5 game-dev playbook for shipping vertical slices with Claude Code. Unreal Engine 5.7+, C++ + Blueprints, GAS, Enhanced Input, Wwise (MetaSounds fallback), Niagara, UMG + Common UI, Git LFS. Single source of truth for orchestration, commands, and conventions.
 
 ---
 
@@ -189,7 +189,7 @@ See [agents/project-scaffolder.md](agents/project-scaffolder.md) for the full in
 ```bash
 mkdir my-game && cd my-game
 bash ~/.claude/gamebook/scripts/gamebook-init.sh \
-  --name "MyGame" --desc "One-line description" --engine 5.4
+  --name "MyGame" --desc "One-line description" --engine 5.7
 ```
 
 Result:
