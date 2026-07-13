@@ -1,0 +1,46 @@
+{
+  "$comment": "Blood & Bureaucracy. Pre-production was authored MANUALLY outside the harness (docs at c:/games/project_blood, decisions D-001..D-032). The project is bound here at stage:preproduction so the harness re-runs preproduction-exit as an honest non-trusting gate (rather than trusting the manual self-graded review) after the greybox prototype. See $binding_note.",
+  "$binding_note": "Bound 2026-07-13 at stage:preproduction with empty stage_history. Upstream concept + concept-greenlight happened in the manual doc phase and are not re-run. The next harness gate to write stage_history is preproduction-exit-wave, which advances to vertical-slice.",
+  "name": "blood-bureaucracy",
+  "description": "Campy-gothic indirect-control cult/colony sim: you influence, your followers misinterpret and build a civilization around you.",
+  "profile": "sp-vertical-slice",
+  "stage": "preproduction",
+  "staffing": "solo",
+  "stage_history": [],
+  "repo_path": null,
+  "stack": {
+    "engine": "Unreal Engine",
+    "engine_version": "5.8",
+    "abilities": "GAS",
+    "input": "Enhanced Input",
+    "vfx": "Niagara",
+    "ui": "UMG + Common UI",
+    "audio": "MetaSounds",
+    "networking": { "mode": "single-player", "replication_graph": false },
+    "monetization": "none",
+    "perf": { "target_fps": 60, "baseline": "GTX 1060 / PS5-equivalent", "nanite": false, "lumen": false }
+  },
+  "platforms": ["Win64"],
+  "storefronts": ["Steam", "itch.io"],
+  "design": {
+    "genre": "Gothic indirect-control colony sim / exploration RPG",
+    "pillars": [
+      "Influence, never command — every player verb is an act of implication (attention, presence, blessing, relics, petition answers)",
+      "Misinterpretation carries weight — follower traits distort intent into action; the intent→outcome gap is the primary story generator, and every event moves a real dial",
+      "Growth raises the stakes — success increases Exposure; the late game is harder to keep hidden, not easier to win",
+      "Three loops, always open — short (minutes), medium (session), and long (campaign) pulls stay distinctive and non-repetitive"
+    ],
+    "reference_games": ["Majesty", "Against the Storm", "Cult of the Lamb", "RimWorld", "Anno 1800", "Dungeon Keeper / Evil Genius"],
+    "art_direction": "Campy gothic — spooky world nobody takes too seriously; greybox-first (primitives + flat-color states + readable temp UI) until the core verb is proven fun",
+    "narrative": {
+      "tone": "Campy gothic; antagonists are annoyed bureaucrats (Department of Unusual Affairs), not crusading heroes",
+      "delivery": "Petitions, misinterpretation outcomes, Rumor Gazette clippings, and enshrined relics; dynamically generated follower names"
+    }
+  },
+  "business": {
+    "vision": "A gothic cult-management survival city builder where your followers build the world you accidentally inspire — 'Build nothing. Influence everything.' The demo anchors a Kickstarter campaign.",
+    "audience": "Colony-sim / indirect-control strategy enthusiasts (Majesty, Against the Storm, RimWorld, Cult of the Lamb players)",
+    "biggest_risk": "The core verb (attention → misinterpretation → settlement growth) fails to land as greybox — or the game slides into the WorldBox trap (autonomous world + passive observer). The prototype-gate fun verdict is the early kill/iterate signal.",
+    "comparables": ["Majesty", "Against the Storm", "Cult of the Lamb", "RimWorld"]
+  }
+}
