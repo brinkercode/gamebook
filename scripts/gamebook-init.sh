@@ -301,6 +301,22 @@ MAKE
   echo "  + Makefile"
 fi
 
+# ── Project scripts (the Makefile targets call these repo-locally) ─────────
+echo "▶ scripts/"
+mkdir -p "$ROOT/scripts"
+for s in gen-index cook-smoke automation-test gauntlet-critical generate compile dev-bg; do
+  src="$GAMEBOOK/scripts/$s.sh"
+  dst="$ROOT/scripts/$s.sh"
+  if [ -f "$dst" ]; then
+    echo "  · skip (exists): scripts/$s.sh"
+  elif [ -f "$src" ]; then
+    cp "$src" "$dst" && chmod +x "$dst"
+    echo "  + scripts/$s.sh"
+  else
+    echo "  ! scripts/$s.sh not in gamebook — 'make $s' unavailable until authored"
+  fi
+done
+
 # ── Git init + hooks ──────────────────────────────────────────
 if [ ! -d "$ROOT/.git" ]; then
   git -C "$ROOT" init -q

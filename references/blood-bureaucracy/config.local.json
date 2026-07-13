@@ -1,0 +1,4 @@
+{
+  "$comment": "Local, machine-specific overlay for blood-bureaucracy. Shallow-merged over config.json by resolve-project. Owns repo_path (the on-disk location of the scaffolded UE5 project). Does NOT carry stage/stage_history/profile/staffing — those live in config.json and are owned by greenlight/gate waves.",
+  "repo_path": "C:/games/project_blood"
+}
