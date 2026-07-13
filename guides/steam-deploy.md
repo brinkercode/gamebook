@@ -199,7 +199,7 @@ CI packages build
           └─ Upload to "dev" branch (password-protected, internal only)
 
 QA tests the dev branch build
-    └─ Approve? → build-release-engineer runs: make steam-promote-beta
+    └─ Approve? → eng-build runs: make steam-promote-beta
           └─ Build goes live on "beta" (opt-in public beta)
 
 Beta feedback integrated → release candidate built

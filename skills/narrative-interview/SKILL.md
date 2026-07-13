@@ -29,4 +29,4 @@ Invoke after the concept interview (`docs/CONCEPT.md` exists) and before any dia
 
 ## Output
 
-A populated `docs/NARRATIVE.md` with setting, protagonist, antagonist, hook, act structure, content rating notes, and first-content priority list. `narrative-content-author` reads this before authoring any dialogue or audio logs.
+A populated `docs/NARRATIVE.md` with setting, protagonist, antagonist, hook, act structure, content rating notes, and first-content priority list. `narrative-designer` reads this before authoring any dialogue or audio logs.

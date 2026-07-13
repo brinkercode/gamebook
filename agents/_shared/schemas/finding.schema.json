@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "review finding (pre-verification)",
+  "description": "One dimension-reviewer's findings, before adversarial verification. review-wave re-feeds each finding to a skeptic whose prompt is to REFUTE it; only CONFIRMED findings reach the report.",
+  "type": "object",
+  "required": ["dimension", "findings"],
+  "properties": {
+    "dimension": { "type": "string", "description": "gas-patterns|bp-hygiene|replication|perf|naming|save-integrity|security" },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "detail", "severity"],
+        "properties": {
+          "title": { "type": "string" },
+          "detail": { "type": "string", "description": "file:line, what's wrong, the concrete failure it causes" },
+          "severity": { "type": "string", "enum": ["blocker", "major", "minor"] },
+          "fix": { "type": "string" },
+          "verdict": { "type": "string", "enum": ["CONFIRMED", "REFUTED", "UNVERIFIED"], "description": "set by the adversarial verifier, not the finder" }
+        }
+      }
+    }
+  }
+}

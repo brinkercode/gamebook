@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "agent handoff (author)",
+  "description": "Mirrors agents/_shared/HANDOFF.md v2. NOTE: gate_result is retained for back-compat but is IGNORED by gate logic — an independent qa-gate-verifier produces the gating verdict. systems_surface[] is the C++→Blueprint contract (the gamebook's analog of godbook's endpoints[]).",
+  "type": "object",
+  "required": ["schema_version", "agent", "status", "files_changed"],
+  "properties": {
+    "schema_version": { "type": "string", "const": "2" },
+    "task_id": { "type": "string" },
+    "agent": { "type": "string" },
+    "phase": { "type": "integer" },
+    "status": { "type": "string", "enum": ["ready", "blocked", "skipped"] },
+    "escalate": { "type": "boolean", "description": "true if the change grew beyond single-surface scope — the wave returns status:escalate" },
+    "gate_result": { "type": "string", "enum": ["pass", "fail"], "description": "advisory self-report — NOT read for gating" },
+    "gate": {
+      "type": "object",
+      "properties": {
+        "step": { "type": "string" },
+        "duration_ms": { "type": "integer" },
+        "failed_step": { "type": ["string", "null"] },
+        "logs_tail": { "type": ["string", "null"] }
+      }
+    },
+    "files_changed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "op", "summary"],
+        "properties": {
+          "path": { "type": "string" },
+          "op": { "type": "string", "enum": ["add", "modify", "delete", "rename"] },
+          "summary": { "type": "string" }
+        }
+      }
+    },
+    "tests_added": { "type": "array", "items": { "type": "object" } },
+    "systems_surface": {
+      "type": "array",
+      "description": "eng-gameplay only, MANDATORY on feature work — what design-technical (BP side) reads to wire content. Never invent entries not in this list.",
+      "items": {
+        "type": "object",
+        "required": ["type", "name", "header_path"],
+        "properties": {
+          "type": { "type": "string", "enum": ["ability", "attribute", "effect", "subsystem", "component"] },
+          "name": { "type": "string" },
+          "header_path": { "type": "string" },
+          "blueprint_consumers": { "type": "array", "items": { "type": "string" } },
+          "gameplay_tags": { "type": "array", "items": { "type": "string" } },
+          "replication": { "type": "string", "enum": ["client", "server", "none"] }
+        }
+      }
+    },
+    "assets_authored": {
+      "type": "array",
+      "description": "binary assets created via editor-Python scripts (the deterministic authoring channel) — path + the script that generates it",
+      "items": {
+        "type": "object",
+        "properties": {
+          "asset_path": { "type": "string" },
+          "generator_script": { "type": "string" },
+          "summary": { "type": "string" }
+        }
+      }
+    },
+    "decisions": { "type": "array", "items": { "type": "string" } },
+    "deps_added": { "type": "array", "items": { "type": "string" } },
+    "downstream_needs": { "type": "object" },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "commit_message": { "type": "string" }
+  }
+}

@@ -8,7 +8,7 @@
 
 ```yaml
 task_id: ship-<YYYY-MM-DD>-<kebab-slug>     # shared across the whole run
-agent:   <gameplay-systems-engineer | blueprint-feature-builder | level-encounter-designer | narrative-content-author | playtest-architect | code-reviewer | build-release-engineer>
+agent:   <eng-gameplay | design-technical | design-level | narrative-designer | qa-lead | eng-director | eng-build>
 phase:   1 | 2 | 4
 scope: |
   <2 sentences max. What this agent builds/reviews, scoped to its surface only.>
@@ -21,8 +21,8 @@ context:
   task_type: <e.g. add_ability>
   base_sha:  <git sha at run start>
   related_agents:
-    - blueprint-feature-builder (Phase 2)
-    - playtest-architect (Phase 1)
+    - design-technical (Phase 2)
+    - qa-lead (Phase 1)
 acceptance:                                  # observable success conditions
   - <e.g. "GA_Dash activates on Enhanced Input IA_Dash; consumes 25 Stamina via GE_DashCost">
   - <e.g. "make gate STEP=lint && STEP=test passes for changed source files">
@@ -46,15 +46,15 @@ return:
 4. **No nested briefs.** A subagent does not spawn another subagent. Escalate via `blockers` in the handoff JSON.
 5. **Token budget.** Briefs fit on one screen. Over 30 lines = scope too big; split into two `/ship` runs.
 6. **Always include `upstream_handoffs` for Phase 2+ agents.** They must read the prior phase's JSON before doing any work.
-7. **`systems.json` is the gate.** `blueprint-feature-builder` MUST refuse to start if `.claude/handoffs/systems.json` is missing or `status != "ready"`.
+7. **`systems.json` is the gate.** `design-technical` MUST refuse to start if `.claude/handoffs/systems.json` is missing or `status != "ready"`.
 
 ---
 
-## Example — Phase 1, gameplay-systems-engineer
+## Example — Phase 1, eng-gameplay
 
 ```yaml
 task_id: ship-2026-06-16-dash-ability
-agent:   gameplay-systems-engineer
+agent:   eng-gameplay
 phase:   1
 scope: |
   Add GA_Dash gameplay ability: 6m forward burst, 0.2s duration, 25 Stamina cost,
@@ -68,8 +68,8 @@ context:
   task_type: add_ability
   base_sha:  a3f2c91
   related_agents:
-    - playtest-architect (Phase 1, writing failing Functional Tests in parallel)
-    - blueprint-feature-builder (Phase 2, BLOCKED on your handoff)
+    - qa-lead (Phase 1, writing failing Functional Tests in parallel)
+    - design-technical (Phase 2, BLOCKED on your handoff)
 acceptance:
   - GA_Dash class compiles; UPROPERTY exposes CooldownDuration + StaminaCost
   - Ability activates on IA_Dash trigger; consumes 25 Stamina via GE_DashCost
@@ -77,21 +77,21 @@ acceptance:
   - Activation replicates server → clients; cosmetic Niagara fires locally
   - make gate STEP=lint && STEP=test passes for changed C++
 do_not:
-  - touch Content/ (blueprint-feature-builder owns the BP_GA_Dash wrapper and VFX wiring)
+  - touch Content/ (design-technical owns the BP_GA_Dash wrapper and VFX wiring)
   - add a new AttributeSet (extend MyAttributeSet)
   - enable replication graph (single-player default)
   - run make gate STEP=all
 return:
   - write JSON to .claude/handoffs/systems.json
   - emit the same JSON as the final chat message
-  - systems_surface[] array MUST be populated — blueprint-feature-builder needs it
+  - systems_surface[] array MUST be populated — design-technical needs it
 ```
 
-## Example — Phase 2, blueprint-feature-builder (systems handoff consumer)
+## Example — Phase 2, design-technical (systems handoff consumer)
 
 ```yaml
 task_id: ship-2026-06-16-dash-ability
-agent:   blueprint-feature-builder
+agent:   design-technical
 phase:   2
 scope: |
   Build BP_GA_Dash (Blueprint subclass of GA_Dash) wiring Niagara NS_DashTrail and
@@ -112,7 +112,7 @@ acceptance:
   - PIE: dash works in editor; no log warnings/errors
   - make gate STEP=lint && STEP=test passes for changed BPs
 do_not:
-  - touch Source/ (gameplay-systems-engineer owns C++ ability changes)
+  - touch Source/ (eng-gameplay owns C++ ability changes)
   - introduce a new IMC (extend IMC_PlayerDefault)
   - run make gate STEP=all
 return:

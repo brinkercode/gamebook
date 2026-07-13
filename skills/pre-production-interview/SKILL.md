@@ -47,7 +47,7 @@ A populated `docs/PRE_PRODUCTION.md` containing:
 - Risk Flags (anything user said that sounds expensive / out of indie scope)
 - Next Interviews to Run
 
-`project-scaffolder` and every other interview reads this doc before running. `code-reviewer` references the feature triage when flagging scope creep.
+`project-scaffolder` and every other interview reads this doc before running. `eng-director` references the feature triage when flagging scope creep.
 
 ## Rules
 

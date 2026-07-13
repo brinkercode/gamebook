@@ -19,7 +19,7 @@ Invoke after the narrative interview (`docs/NARRATIVE.md` exists, Wwise state na
 3. **Name Wwise objects** — if Wwise: capture Bus hierarchy, State Groups (carry over from `docs/NARRATIVE.md`), RTPC names, and Wwise event naming convention.
 4. **Map to implementation** — read `resources/implementation-mapping.md`; translate audio choices to concrete Wwise/MetaSound setup steps.
 5. **Write `docs/AUDIO.md`** — use `resources/output-template.md`.
-6. **Hand off** — give `narrative-content-author` the Wwise state list and event naming convention.
+6. **Hand off** — give `narrative-designer` the Wwise state list and event naming convention.
 
 ## Resources (read on demand)
 
@@ -29,4 +29,4 @@ Invoke after the narrative interview (`docs/NARRATIVE.md` exists, Wwise state na
 
 ## Output
 
-A populated `docs/AUDIO.md` with music tone, SFX language, ambience layer plan, Wwise Bus hierarchy, RTPC list, State Groups, event naming convention, and mixing philosophy. `narrative-content-author` reads this before any Wwise event hookup work.
+A populated `docs/AUDIO.md` with music tone, SFX language, ambience layer plan, Wwise Bus hierarchy, RTPC list, State Groups, event naming convention, and mixing philosophy. `narrative-designer` reads this before any Wwise event hookup work.

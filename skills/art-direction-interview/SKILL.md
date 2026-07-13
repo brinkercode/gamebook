@@ -29,4 +29,4 @@ Invoke after the concept interview (`docs/CONCEPT.md` exists) and before any art
 
 ## Output
 
-A populated `docs/ART_DIRECTION.md` with locked palette, reference list, mood priorities, material complexity tier, lighting strategy, and asset pipeline notes. `blueprint-feature-builder` and `level-encounter-designer` read this doc when creating materials and dressing levels.
+A populated `docs/ART_DIRECTION.md` with locked palette, reference list, mood priorities, material complexity tier, lighting strategy, and asset pipeline notes. `design-technical` and `design-level` read this doc when creating materials and dressing levels.

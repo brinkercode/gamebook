@@ -130,7 +130,7 @@ Document this table in `docs/DESIGN.md`.
 
 ## Workflow: Building Widgets
 
-When the **blueprint-feature-builder** builds a widget:
+When the **design-technical** builds a widget:
 
 ### 1. Get the Design Context
 

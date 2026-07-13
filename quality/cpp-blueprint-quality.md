@@ -1,6 +1,6 @@
 # C++ + Blueprint Quality
 
-> Quality bar for UE5 FPS development — C++ systems, Blueprint logic, GAS patterns, and security hygiene. Read by `gameplay-systems-engineer` and `code-reviewer` on every invocation.
+> Quality bar for UE5 FPS development — C++ systems, Blueprint logic, GAS patterns, and security hygiene. Read by `eng-gameplay` and `eng-director` on every invocation.
 
 ---
 
@@ -274,7 +274,7 @@ Escalate a Blueprint to C++ the moment any of these is true:
 - Every custom BP node: add a `Tooltip` on the function. Nodes with no tooltip are rejected in code review.
 - Variable names: `PascalCase` matching C++ UPROPERTY convention. No `myVar`, no `temp`, no `newVariable`.
 - Pure functions (no side effects): mark as `Pure` in BP function settings.
-- `Event Tick` is forbidden unless the owning class is explicitly approved by `gameplay-systems-engineer`. Use `FTimerDelegate` or `AbilityTask` instead.
+- `Event Tick` is forbidden unless the owning class is explicitly approved by `eng-gameplay`. Use `FTimerDelegate` or `AbilityTask` instead.
 - Compile warnings are errors. A BP that compiles with warnings does not ship.
 
 ---
@@ -315,7 +315,7 @@ See [rules/ue5-microtransactions.md](../rules/ue5-microtransactions.md) for the 
 
 ---
 
-## Code Review Checklist (`code-reviewer` runs this)
+## Code Review Checklist (`eng-director` runs this)
 
 - [ ] `EndAbility` called in every `UGameplayAbility::ActivateAbility` exit path
 - [ ] No `FName` string literals for tag lookups — `GameplayTags::` namespace used

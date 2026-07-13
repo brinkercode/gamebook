@@ -178,7 +178,7 @@ Watch it fail (crash or `check` violation) without the fix. Apply the fix. Watch
 
 ### 3. Expedited review
 
-- One reviewer from `gameplay-systems-engineer` or `code-reviewer` — not full `/ship` pipeline.
+- One reviewer from `eng-gameplay` or `eng-director` — not full `/ship` pipeline.
 - Review scope: does the fix work, does it introduce a regression, is the regression test adequate.
 - No Phase 1–4 orchestration. Direct commit to hotfix branch.
 
@@ -195,7 +195,7 @@ Never merge hotfix → main without running `make automation-critical`. Hotfixes
 
 ### 5. Build and ship
 
-See [agents/build-release-engineer guidance] for cook and Steam upload. Hotfix builds skip Gauntlet perf scenarios — `make cook-smoke` + `make automation-critical` only.
+See [agents/eng-build guidance] for cook and Steam upload. Hotfix builds skip Gauntlet perf scenarios — `make cook-smoke` + `make automation-critical` only.
 
 ---
 

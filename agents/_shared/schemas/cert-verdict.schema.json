@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "qa-compliance cert-preflight verdict",
+  "description": "Platform-compliance go/no-go before submission (Steam review, Deck Verified, PS5 TRC, Xbox XR, Switch Lotcheck). Checklist-driven; blocking items (CFR-equivalents) fail the verdict, advisories don't. First-submission failure is normal in the industry — the point of preflight is to catch it before the real queue.",
+  "type": "object",
+  "required": ["platform", "verdict", "items"],
+  "properties": {
+    "platform": { "type": "string", "description": "steam|steam-deck|ps5|xbox|switch" },
+    "verdict": { "type": "string", "enum": ["go", "no-go"] },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item", "result"],
+        "properties": {
+          "item": { "type": "string", "description": "the checklist requirement checked" },
+          "result": { "type": "string", "enum": ["pass", "fail", "n/a", "unverifiable-headless"] },
+          "blocking": { "type": "boolean" },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "blocking_failures": { "type": "array", "items": { "type": "string" } },
+    "manual_checks_needed": { "type": "array", "items": { "type": "string" }, "description": "items that require a human with hardware (e.g. suspend/resume on devkit) — reported honestly, never marked pass" }
+  }
+}

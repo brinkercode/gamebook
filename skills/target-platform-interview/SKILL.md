@@ -19,7 +19,7 @@ Invoke before any packaging configuration, `.uproject` target file setup, or sto
 3. **Lock the input paradigm** — controller-first (console shipping, couch play, gamepad feel must be polished first) vs KBM-first (PC-native, mouse aiming, keyboard bindings primary). This affects Enhanced Input mapping context priority.
 4. **Map to configuration** — read `resources/config-mapping.md`; translate platform choices to `.Target.cs` build targets, `DefaultEngine.ini` platform sections, and store configuration steps.
 5. **Write `docs/TARGET_PLATFORM.md`** — use `resources/output-template.md`.
-6. **Hand off** — give `build-release-engineer` the platform list and min spec; they configure cook targets and CI.
+6. **Hand off** — give `eng-build` the platform list and min spec; they configure cook targets and CI.
 
 ## Resources (read on demand)
 
@@ -29,4 +29,4 @@ Invoke before any packaging configuration, `.uproject` target file setup, or sto
 
 ## Output
 
-A populated `docs/TARGET_PLATFORM.md` with platform targets, minimum hardware spec, input paradigm, store config notes, and accessibility baseline. `build-release-engineer` and `blueprint-feature-builder` (for input) read this.
+A populated `docs/TARGET_PLATFORM.md` with platform targets, minimum hardware spec, input paradigm, store config notes, and accessibility baseline. `eng-build` and `design-technical` (for input) read this.

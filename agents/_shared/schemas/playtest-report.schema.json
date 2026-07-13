@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "qa-playtest-analyst report",
+  "description": "EXPERIENCE findings, not defects. Playtests measure fun; bug bashes measure correctness — this schema is the former. Defects discovered incidentally go in incidental_defects for routing into defect-inventory, never mixed into findings.",
+  "type": "object",
+  "required": ["session", "findings"],
+  "properties": {
+    "session": {
+      "type": "object",
+      "required": ["build", "protocol"],
+      "properties": {
+        "build": { "type": "string", "description": "build/commit identifier played" },
+        "protocol": { "type": "string", "description": "what was played and how (map, duration, automation-driven or scripted walkthrough)" },
+        "duration_minutes": { "type": "integer" }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["finding", "impact", "evidence"],
+        "properties": {
+          "finding": { "type": "string", "description": "the experience observation (pacing, clarity, friction, feel)" },
+          "impact": { "type": "string", "enum": ["blocking-fun", "major", "minor", "polish"] },
+          "evidence": { "type": "string", "description": "what was observed that supports this — moment, log, metric" },
+          "pillar": { "type": "string", "description": "which design pillar this touches" },
+          "suggestion": { "type": "string" }
+        }
+      }
+    },
+    "incidental_defects": { "type": "array", "items": { "type": "string" }, "description": "bugs noticed while playing — routed to defect triage, not judged here" },
+    "verdict": { "type": "string", "enum": ["fun", "promising", "flat", "broken"], "description": "the one-word answer to 'is it fun yet'" }
+  }
+}

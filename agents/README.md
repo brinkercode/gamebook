@@ -1,132 +1,53 @@
-# Gamebook Agents
+# The studio roster — 35 department/role agents (L3)
 
-Purpose-driven Claude Code agents for building Unreal Engine 5 FPS games. Each agent owns a specific phase of `/ship`, communicates via file-based handoffs (`.claude/handoffs/<agent>.json`), and emits a JSON status.
+Flat, single-job agent files. Waves (L2) invoke them by `agentType`; cost tier resolves through
+[../models.json](../models.json) (`greenlight`=fable, `judge`=opus, `author`=sonnet,
+`verifier`/`parser`=haiku). Every agent follows [_shared/WAVE-PROTOCOL.md](_shared/WAVE-PROTOCOL.md)
+(Mode A schema-driven / Mode B legacy handoff file).
 
-See [PLAYBOOK.md](../PLAYBOOK.md) for the orchestration overview.
+Waves address **roles**; at `solo`/`indie` staffing several roles are played by one agent per the
+merge table in [../references/PROFILES.json](../references/PROFILES.json) — directors absorb their
+department at solo scale.
 
----
+| Dept | Agent | Tier | One job |
+|---|---|---|---|
+| studio-ops | `project-scaffolder` | judge | interview → config.json → UE project skeleton |
+| studio-ops | `resolve-project` | parser | bind config + stage + staffing; never writes |
+| design | `design-director` | judge | vision, pillars, briefs, greenlight chair (CD+GD merged) |
+| design | `design-systems` | author | global mechanics, progression, balance frameworks |
+| design | `design-combat` | author | enemies, weapons, bosses, difficulty |
+| design | `design-economy` | author | currencies, sinks/sources, cosmetics-first monetization systems |
+| design | `design-level` | author | blockouts, encounters, streaming (via editor-Python) |
+| design | `design-ux` | author | flows, wireframes, information hierarchy, accessibility |
+| design | `design-technical` | author | BP/UMG wiring against `systems_surface[]` only |
+| engineering | `eng-director` | judge | architecture review + craft gate + security checklist |
+| engineering | `eng-gameplay` | author | C++ systems: GAS, subsystems, components (`systems_surface[]` mandatory) |
+| engineering | `eng-ui` | author | UMG/CommonUI widget C++ |
+| engineering | `eng-network` | author | replication, RPC validation, server authority |
+| engineering | `eng-tools` | author | editor-Python pipeline, commandlets, validators |
+| engineering | `eng-build` | author | cook/package/CI, SteamPipe/EOS wiring |
+| art | `art-director` | judge | style bible, sign-off, placeholder sweeps |
+| art | `art-concept` | author | style guides, asset briefs, Megascans curation |
+| art | `art-tech` | author | materials/shaders, pipeline, LOD/optimization |
+| art | `art-vfx` | author | Niagara systems via generator scripts |
+| art | `art-lighting` | author | baked lighting, post-process, lightmap optimization |
+| art | `art-ui` | author | UI visual theme, CommonUI styles |
+| audio | `audio-designer` | author | Wwise authoring side: events, RTPC, banks, mix |
+| audio | `audio-technical` | author | code side: AkComponent, posting, bank loading |
+| narrative | `narrative-designer` | author | branching structure, quest architecture, flags |
+| narrative | `narrative-writer` | author | dialogue, barks, lore prose |
+| production | `producer` | judge | milestones, risk registers, stage bookkeeping |
+| qa | `qa-lead` | author | Functional Tests/Gauntlet authorship, test plans, asset audits |
+| qa | `qa-gate-verifier` | verifier | non-trusting gate re-run; never writes |
+| qa | `qa-playtest-analyst` | verifier | experience findings (fun ≠ correctness); never writes |
+| qa | `qa-compliance` | verifier | Steam/Deck/TRC/XR/Lotcheck preflight; never writes |
+| qa | `qa-crash-correlator` | parser | logs/callstacks → crash inventory; never writes |
+| qa | `qa-bug-hunter` | author | find → root-cause → fix; adversarial skeptic in reviews |
+| publishing | `release-manager` | author | packaging coordination, store assets, patch notes |
+| publishing | `liveops-producer` | author | season arcs, beat calendars, postmortems |
+| publishing | `community-writer` | author | patch comms, store copy, player-facing writing |
 
-## The agents
-
-| Agent | Scope | Phase in `/ship` |
-|---|---|---|
-| `project-scaffolder` | `AskUserQuestion`-driven UE5 interview, `project.config.json`, `gamebook-init.sh` | Pre-`/ship` (once per project) |
-| `gameplay-systems-engineer` | C++ subsystems, GAS abilities/effects/attributes, replication, components | 1 |
-| `playtest-architect` | Functional Tests, Gauntlet automation, manual playtest scripts | 1 |
-| `blueprint-feature-builder` | Blueprint logic, UMG/Common UI widgets, content wiring | 2 (blocked on `systems.json`) |
-| `level-encounter-designer` | Blockout, encounter scripting, level streaming, AI placement | 2 |
-| `code-reviewer` | C++/BP review, GAS pattern audit, save/asset/perf hygiene | 2 |
-| `narrative-content-author` | Dialogue trees, audio logs, story beats, Wwise event hookup | 2 (optional) |
-| `build-release-engineer` | Cook, package, CI, Steam upload, EOS Ecom wiring | 4 (conditional) |
-
----
-
-## Handoff convention
-
-Every subagent writes `.claude/handoffs/<agent>.json` AND emits the same JSON as its final chat message. The orchestrator polls the file; downstream agents `Read` it before starting.
-
-```
-.claude/handoffs/
-├── systems.json     # gameplay-systems-engineer   (Phase 1, BLOCKS blueprint-feature-builder)
-├── playtest.json    # playtest-architect          (Phase 1)
-├── content.json     # blueprint-feature-builder   (Phase 2)
-├── level.json       # level-encounter-designer    (Phase 2)
-├── narrative.json   # narrative-content-author    (Phase 2, optional)
-├── review.json      # code-reviewer               (Phase 2)
-└── build.json       # build-release-engineer      (Phase 4, optional)
-```
-
-The `/ship` orchestrator clears this directory at the start of every run. Schema in [_shared/HANDOFF.md](_shared/HANDOFF.md). Brief template in [_shared/BRIEF.md](_shared/BRIEF.md).
-
----
-
-## Shared context (token-efficient)
-
-```
-agents/
-├── <agent>.md                  # Slim role definition, flat & natively discovered
-├── README.md                   # This index
-└── _shared/                    # Shared context, referenced by the agent files
-    ├── PATTERNS.md             # GAS, subsystems, Enhanced Input, UMG, replication, save/load
-    ├── STACK.md                # Canonical UE5 stack reference (engine, plugins, layout)
-    ├── SECURITY_CHECKLIST.md   # Anti-tamper, save integrity, MicroTxn, network trust
-    ├── BRIEF.md                # Orchestrator → subagent contract
-    └── HANDOFF.md              # Subagent → orchestrator contract (systems_surface schema)
-```
-
-A blueprint-feature-builder wiring a UMG widget reads `_shared/PATTERNS.md#umg`; a gameplay-systems-engineer adding an ability reads `_shared/PATTERNS.md#gas`. Agents only load what's relevant.
-
----
-
-## INDEX protocol (every agent's first action)
-
-Every agent's first read is `.claude/INDEX.json`. It saves tokens vs. broad Glob/Grep on session start.
-
-### Step 1 — Read `.claude/INDEX.json`
-
-Contains:
-- `project` — name, description, stack (engine version, plugins, framework choices)
-- `entry_points` — `<Project>.uproject`, `Source/<Project>/<Project>GameModeBase.cpp`, `Config/DefaultGame.ini`
-- `task_routing` — task type → exact files/dirs to load
-- `inventory` — gameplay_abilities, attribute_sets, gameplay_effects, subsystems, components, blueprints, widgets, levels, data_assets, data_tables
-- `tree_hash` — sha256 of `git ls-tree HEAD` for staleness detection
-
-### Step 2 — Resolve task type
-
-| User intent | task type |
-|---|---|
-| "add ability", "new gameplay ability", "GA_…" | `add_ability` |
-| "new attribute", "add to AttributeSet" | `add_attribute` |
-| "new effect", "GE_…" | `add_effect` |
-| "new subsystem", "GameInstanceSubsystem" | `add_subsystem` |
-| "new component", "ActorComponent" | `add_component` |
-| "new widget", "UMG", "WB_…" | `add_widget` |
-| "new level", "blockout", "encounter" | `add_level` |
-| "save slot", "USaveGame" | `add_save_data` |
-| "data asset", "DA_…" | `add_data_asset` |
-| "data table", "DT_…" | `add_data_table` |
-| "dialogue", "audio log", "story beat" | `add_narrative` |
-| "automation test", "Functional Test" | `write_tests` |
-| "cook", "package", "ship build" | `add_build` |
-| "Steam", "EOS Ecom", "microtransaction" | `add_monetization` |
-| "review", "audit perf", "check GAS" | `review_code` |
-
-Load **only** the files/dirs in `task_routing[type]`. Do not Glob/Grep until that proves insufficient.
-
-### Step 3 — Check staleness
-
-If INDEX is older than 1 hour or `git status --porcelain` shows changes to inventoried directories, run `make index` first.
-
-### Step 4 — Before handoff
-
-Run `make gate STEP=lint && make gate STEP=test` on your slice. Include `gate_result: pass | fail` in your handoff JSON. The orchestrator runs `make gate` (full) at integration boundaries — never run that yourself.
-
-### Refresh cadence
-
-- Auto: `hooks/post-commit-audit.sh` regenerates INDEX after every commit
-- Auto: `hooks/session-end.sh` regenerates on every Stop event
-- Manual: `make index`
-
----
-
-## Installation
-
-Agents ship inside the gamebook repo. `scripts/gamebook-init.sh` **symlinks** `.claude/agents/` to the gamebook copies so updates propagate to all projects automatically.
-
-```bash
-bash ~/.claude/gamebook/scripts/gamebook-init.sh --name MyFPS --desc "..." --engine 5.7
-ls .claude/agents   # 8 agent <name>.md files + _shared/ (BRIEF, HANDOFF, PATTERNS, STACK, SECURITY_CHECKLIST) + README.md
-```
-
-To update agents across all projects, just edit the files in `~/.claude/gamebook/agents/` — the symlinks pick up changes on next session.
-
----
-
-## Permissions
-
-`.claude/settings.json` enforces:
-
-- **No git commits** — agents suggest commit messages, never commit. (Git LFS-tracked binaries make accidental commits expensive to undo.)
-- **File access scoped** — `Source/`, `Content/`, `Config/`, `Plugins/`, `Tests/`
-- **Secret protection** — cannot read `.env`, `*.pfx`, signing keys, Steam SDK tokens, EOS client secrets
-- **Editor invocation gated** — only `build-release-engineer` runs `UnrealEditor-Cmd` cook/package commands
+Shared context: [_shared/STACK.md](_shared/STACK.md), [_shared/PATTERNS.md](_shared/PATTERNS.md),
+[_shared/HANDOFF.md](_shared/HANDOFF.md), [_shared/SECURITY_CHECKLIST.md](_shared/SECURITY_CHECKLIST.md),
+[_shared/schemas/](_shared/schemas/). New agents: `scripts/new-agent.sh <name> [model]`, then add the
+role to `models.json` and (if merged at small scales) `references/PROFILES.json`.

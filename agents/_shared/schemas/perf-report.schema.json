@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "performance report",
+  "description": "Headless stat-capture results compared against quality/performance-budgets.md ceilings (frame time, draw calls, triangles, memory). Violations are budget breaches, each with measured-vs-budget numbers.",
+  "type": "object",
+  "required": ["result", "metrics"],
+  "properties": {
+    "result": { "type": "string", "enum": ["pass", "fail"] },
+    "capture": {
+      "type": "object",
+      "properties": {
+        "map": { "type": "string" },
+        "method": { "type": "string", "description": "how measured (automation run with stat dump, csv profile, insights trace)" },
+        "build_config": { "type": "string" }
+      }
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["metric", "measured", "budget", "within_budget"],
+        "properties": {
+          "metric": { "type": "string" },
+          "measured": { "type": "number" },
+          "budget": { "type": "number" },
+          "unit": { "type": "string" },
+          "within_budget": { "type": "boolean" }
+        }
+      }
+    },
+    "violations": { "type": "array", "items": { "type": "string" }, "description": "each breach with suspected cause and file/asset hint" },
+    "regressions": { "type": "array", "items": { "type": "string" }, "description": "metrics that got worse since the last recorded capture" }
+  }
+}

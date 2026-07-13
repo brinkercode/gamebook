@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "resolve-project verdict",
+  "type": "object",
+  "required": ["resolved", "source", "stage", "staffing"],
+  "properties": {
+    "resolved": { "type": "boolean", "description": "false when no references/<project>/config.json exists" },
+    "source": { "type": "string", "enum": ["references", "in-repo", "none"] },
+    "project": { "type": "string" },
+    "profile": { "type": "string", "description": "prototype|sp-vertical-slice|mp-game|live-game" },
+    "capabilities": { "type": "array", "items": { "type": "string" }, "description": "resolved capability set (profile bundle ∪ config.capabilities); waves gate meta.requires against this" },
+    "stage": { "type": "string", "enum": ["concept", "preproduction", "vertical-slice", "production", "alpha", "beta", "gold", "live"], "description": "lifecycle position — waves out of stage self-skip" },
+    "staffing": { "type": "string", "enum": ["solo", "indie", "studio"], "description": "studio scale — controls specialist fan-out; merges per references/PROFILES.json" },
+    "repo_path": { "type": ["string", "null"], "description": "null before scaffold-wave — concept/preproduction waves run docs-only against references/<project>/" },
+    "stack": {
+      "type": "object",
+      "properties": {
+        "engine_version": { "type": "string" },
+        "audio": { "type": "string", "enum": ["Wwise", "MetaSounds"] },
+        "networking": { "type": "object", "properties": { "mode": { "type": "string" }, "replication_graph": { "type": "boolean" } } },
+        "monetization": { "type": "string" },
+        "perf": { "type": "object", "properties": { "target_fps": { "type": "integer" }, "nanite": { "type": "boolean" }, "lumen": { "type": "boolean" } } }
+      }
+    },
+    "platforms": { "type": "array", "items": { "type": "string" } },
+    "notes": { "type": "string", "description": "why unresolved, or which fallback was used" }
+  }
+}

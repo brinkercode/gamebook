@@ -1,118 +1,41 @@
 ---
-description: Small, scoped change (bug fix, refactor, one-file feature). Single agent, one review pass, gate. No multi-phase orchestration.
+description: Small, scoped change (bug fix, tuning, one-surface tweak). Deterministic fix-wave: one author → independent review → independent gate. Escalates to /feature if it grows.
 argument-hint: <what to change in plain English>
 ---
 
-# /fix — small-change pipeline
+# /fix — small-change pipeline (launches `fix-wave`)
 
-For changes **scoped to a single surface**: one C++ class, one Blueprint, one UMG widget, or one Data Asset. If the change touches both a C++ system and its Blueprint consumers, or modifies a GAS AttributeSet schema, use `/ship` instead.
+`/fix $ARGUMENTS` runs a single-surface change through the **deterministic `fix-wave`**
+(`.claude/workflows/fix-wave.js`): one author (eng-gameplay for C++, design-technical for
+BP/content — chosen by the wave) makes the edit, then an **independent** eng-director review and an
+**independent** qa-gate-verifier check it — the author gets no vote. The wave returns a commit
+message; **you never commit.**
 
-Sizing rubric:
+> Scope: ONE surface (C++ OR Blueprint OR widget OR data asset), no GAS AttributeSet schema
+> change, no C++↔BP contract change. If it grows, the wave hands back `status: "escalate"` →
+> run `/feature`. Past alpha the wave enforces the debug-only regime automatically.
 
-| Size | Examples | Command |
-|---|---|---|
-| Trivial | Comment, rename, INI value, Data Table row | Just do it inline. No command. |
-| Small | Single C++ class fix, internal refactor, Blueprint logic tweak, widget styling, ability tuning | `/fix <description>` |
-| Full feature | New ability + Blueprint wiring + level scripting · GAS AttributeSet schema change · New weapon with C++ + BP + VFX + audio | `/ship <description>` |
+## Phase 0 — Prep (you, directly)
 
----
+1. **Resolve the project.** `ls references/*/config.json` (or in-repo `project.config.json`).
+   If none, STOP: "Run `/pitch` first."
+2. **Scope check.** If `$ARGUMENTS` is under 4 words or vague, `AskUserQuestion` ONCE.
 
-## Phase 0 — Prep
-
-1. **Require `project.config.json`.**
-   ```bash
-   test -f project.config.json && \
-     jq -e '.stack.engine and .stack.abilities' project.config.json >/dev/null
-   ```
-   If missing/malformed, STOP with:
-
-   > `project.config.json` missing. Run the `project-scaffolder` agent first
-   > (it can infer choices from existing code in brownfield projects), then re-run `/fix`.
-
-2. **Load engine context** from `project.config.json`. When you read or edit code, the matching `.claude/rules/ue5-cpp.md` or `.claude/rules/ue5-blueprints.md` fires via path scoping — trust it for syntax/idioms.
-3. **Scope check.** If `$ARGUMENTS` is under 4 words or vague, `AskUserQuestion` ONCE to clarify.
-4. **Detect shape:**
-   ```bash
-   test -f Makefile && grep -q "^gate:" Makefile && echo HAS_GATE
-   ```
-5. **Capture base SHA:** `git rev-parse --short HEAD`.
-6. **No handoff dir reset** — `/fix` doesn't use multi-agent handoffs. If you need them, escalate to `/ship`.
-
----
-
-## Phase 1 — Make the change (you, directly)
-
-Do the work yourself. No subagent. Read the file(s), edit them, run the slice gate.
-
-**Escalation triggers — STOP and tell the user "re-run as `/ship $ARGUMENTS`" if:**
-- The change requires editing both a C++ class and one of its Blueprint consumers in non-trivial ways.
-- It adds or renames a `UPROPERTY` on a `UAttributeSet` subclass (GAS schema change).
-- It requires a new Niagara System, Wwise Event, or Input Action that also needs Blueprint or level wiring.
-- It touches both `Source/` and `Content/` in non-trivial ways.
-
-After editing:
-```bash
-make gate STEP=build && make gate STEP=test
-```
-
-If build or tests fail on the changed slice, fix them. One retry. If they still fail, STOP and report.
-
----
-
-## Phase 2 — Review (one agent)
+## Phase 1 — Launch the wave
 
 ```
-Agent[code-reviewer]: <BRIEF — review the diff from <base> to HEAD>
+Workflow(name: "fix-wave", args: {
+  change: "$ARGUMENTS",
+  project: "<project under references/, or _TEMPLATE for in-repo config>"
+})
 ```
 
-The reviewer reads `git diff <base>..HEAD`, applies the code-reviewer checklist (GAS pattern audit, save/asset/perf hygiene), returns a JSON handoff. Address blockers before Phase 3.
+## Phase 2 — Report
 
-For changes touching:
-- Network replication (`UPROPERTY(Replicated)`, RPCs, `GetLifetimeReplicatedProps`)
-- Save/Load (`USaveGame` subclasses, slot names)
-- Platform APIs (Steam MicroTxn, EOS Ecom, console stores)
-- Input security surfaces
+1. Present ONE structured summary (change, files, review verdict, gate verdict, commit message).
+2. `status: "escalate"` → tell the user "bigger than a fix — re-run as `/feature $ARGUMENTS`."
+3. `status: "needsRework"` → surface the failing phase + blockers/logs and stop.
+4. **No commit. No push.** The user commits.
 
-also spawn `code-reviewer` with a security flag in the BRIEF — it applies the security checklist section.
-
----
-
-## Phase 3 — Validation
-
-```bash
-make gate          # full integrated gate (build + cook-smoke + automation-critical)
-```
-
----
-
-## Phase 4 — Report
-
-```
-✅/❌ /fix <slug>  ·  <duration>
-
-Change:
-  <one-sentence summary>
-
-Files: <N>
-  <path1> — <one-liner>
-
-Review:
-  code-reviewer        : <pass/fail> · <B blockers>
-
-Gate:
-  make gate            : <pass/fail>
-
-Next: <ready to commit | list of blockers | "escalate to /ship">
-```
-
-**Then stop.** The user commits.
-
----
-
-## Hard rules
-
-- **One surface.** Editing across `Source/` AND `Content/` with non-trivial changes in both → switch to `/ship`.
-- **No GAS AttributeSet schema changes.** Those require systems→content handoff coordination. Use `/ship`.
-- **No new top-level Plugins or module dependencies** unless trivially obvious and explained in the diff.
-- **One review pass, one retry max.** If review keeps finding blockers, you misjudged scope — escalate.
-- **No commits.** User reviews and commits manually.
+## Substitutions
+`$ARGUMENTS` — the change description the user passed.

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "security audit verdict",
+  "description": "Game-security review against agents/_shared/SECURITY_CHECKLIST.md: save integrity, microtransaction server-validation, RPC trust (WithValidation), replication conditions, shipping-build hygiene. Critical/high findings are blockers.",
+  "type": "object",
+  "required": ["result", "findings"],
+  "properties": {
+    "result": { "type": "string", "enum": ["pass", "fail"] },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["severity", "finding"],
+        "properties": {
+          "severity": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+          "finding": { "type": "string" },
+          "file_hint": { "type": "string" },
+          "checklist_item": { "type": "string", "description": "which SECURITY_CHECKLIST.md section this violates" }
+        }
+      }
+    },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "checks_run": { "type": "array", "items": { "type": "string" } }
+  }
+}

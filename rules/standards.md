@@ -9,7 +9,7 @@
 - **Thin Blueprints** — Blueprint classes that own significant logic are tech debt. BP is for wiring and content; C++ is for systems. If a Blueprint function body exceeds 20 nodes, extract it to a C++ `BlueprintCallable` function.
 - **GAS for all abilities** — every active player/enemy capability uses `UGameplayAbility` + `UGameplayEffect` + `UAttributeSet`. Never build a parallel ability system with custom damage floats and boolean state.
 - **Enhanced Input for all player input** — no direct `BindAxis`/`BindAction` calls on `InputComponent`. No legacy input bindings in `Project Settings > Input`.
-- **File-based agent handoffs** — `.claude/handoffs/systems.json` is the contract between `gameplay-systems-engineer` and `blueprint-feature-builder`. Never proceed with Blueprint content work before `systems.json` exists and has `"status": "ready"`.
+- **File-based agent handoffs** — `.claude/handoffs/systems.json` is the contract between `eng-gameplay` and `design-technical`. Never proceed with Blueprint content work before `systems.json` exists and has `"status": "ready"`.
 
 ## C++
 
@@ -62,7 +62,7 @@
 
 ## Documentation
 
-- **Update `docs/GAMEPLAY_SYSTEMS.md` when adding a GAS ability, attribute, or subsystem** — `blueprint-feature-builder` reads this before touching content.
+- **Update `docs/GAMEPLAY_SYSTEMS.md` when adding a GAS ability, attribute, or subsystem** — `design-technical` reads this before touching content.
 - **`project.config.json` is the single source of truth for stack choices** — multiplayer, audio backend, save encryption key length, monetization flag. Agents read it; never hard-code stack assumptions.
 
 ## What Claude Must Never Do

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "asset audit report",
+  "description": "Content-hygiene sweep: Git LFS coverage, naming conventions (rules/ue5-naming.md), texture budgets, redirectors, orphaned assets. Read-mostly; fixes route back through fix-wave.",
+  "type": "object",
+  "required": ["result", "checks"],
+  "properties": {
+    "result": { "type": "string", "enum": ["pass", "fail"] },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["check", "result", "violations"],
+        "properties": {
+          "check": { "type": "string", "description": "lfs-coverage|naming|texture-budgets|redirectors|orphans|reference-integrity" },
+          "result": { "type": "string", "enum": ["pass", "fail", "skip"] },
+          "violations": { "type": "array", "items": { "type": "string" }, "description": "asset path + what's wrong; empty when pass" },
+          "scanned": { "type": "integer" }
+        }
+      }
+    },
+    "summary": { "type": "string" }
+  }
+}

@@ -1,7 +1,7 @@
 # Gameplay Systems
 
 > GAS surface, weapon systems, movement, AI, and all C++ subsystems for {{PROJECT_NAME}}.
-> Source of truth for `blueprint-feature-builder` — read before any content wiring.
+> Source of truth for `design-technical` — read before any content wiring.
 
 ## Attribute Sets
 

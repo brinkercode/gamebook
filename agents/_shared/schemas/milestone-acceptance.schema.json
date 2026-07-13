@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "milestone acceptance verdict",
+  "description": "The publisher-style milestone review loop: an independent reviewer judges the milestone build against its defined deliverables, returning accepted or a reasonably-detailed deficiency list. The wave allows exactly one repair round before failing (mirrors capped resubmissions in real milestone contracts).",
+  "type": "object",
+  "required": ["accepted", "deliverables"],
+  "properties": {
+    "accepted": { "type": "boolean" },
+    "milestone": { "type": "string" },
+    "deliverables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["deliverable", "met"],
+        "properties": {
+          "deliverable": { "type": "string" },
+          "met": { "type": "boolean" },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "deficiencies": {
+      "type": "array",
+      "description": "on rejection: each deficiency specific enough to action — what, where, and what 'fixed' looks like",
+      "items": { "type": "string" }
+    },
+    "resubmission": { "type": "integer", "description": "which submission round this verdict is for (0 = first)" }
+  }
+}

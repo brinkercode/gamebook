@@ -1,6 +1,6 @@
 # Security Checklist
 
-> Quick-reference checklist for the code-reviewer and build-release-engineer agents. Read only the sections relevant to the current change. UE5 / indie FPS context — focus on save tampering, microtransaction integrity, and network trust.
+> Quick-reference checklist for the eng-director and eng-build agents. Read only the sections relevant to the current change. UE5 / indie FPS context — focus on save tampering, microtransaction integrity, and network trust.
 
 ---
 
@@ -87,7 +87,7 @@
 
 ## Performance Gates {#perf}
 
-These belong in `code-reviewer` reviews, not just `build-release-engineer`:
+These belong in `eng-director` reviews, not just `eng-build`:
 
 - Tick disabled by default on `UActorComponent` (`PrimaryComponentTick.bCanEverTick = false`)
 - No `Cast<>` in Tick — cache the pointer on `BeginPlay`

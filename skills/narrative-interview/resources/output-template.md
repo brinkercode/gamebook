@@ -75,6 +75,6 @@ StateGroup: NarrativeZone
 
 ## First Content Priority
 
-1. {{ First thing narrative-content-author should write }}
+1. {{ First thing narrative-designer should write }}
 2. {{ Second }}
 3. {{ Third }}

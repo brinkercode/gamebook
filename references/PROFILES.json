@@ -1,0 +1,56 @@
+{
+  "$comment": "Capability profiles, lifecycle stages, and staffing scales — the three axes every wave gates on. A project's config.json declares `profile` (capability bundle), `stage` (lifecycle position), and `staffing` (studio scale). resolve-project returns all three; each wave checks meta.requires[] against capabilities, its stages[] guard against stage, and may collapse specialist fan-outs per staffing.",
+  "capabilities": {
+    "gameplay": "C++/GAS runtime code (abilities, attributes, subsystems, components)",
+    "content": "Blueprints, UMG widgets, Data Assets/Tables — the BP-side surface",
+    "levels": "level blockout, encounter scripting, streaming",
+    "narrative": "dialogue, quests, audio logs, story beats",
+    "audio": "Wwise (or MetaSounds) events, banks, mix",
+    "multiplayer": "replicated netcode — dedicated/listen server",
+    "monetization": "storefront transactions (Steam MicroTxn / EOS Ecom / console)",
+    "build": "cook/package pipeline is owned (post-scaffold projects always have this)",
+    "steam": "ships on Steam (store review, Deck Verified applies)",
+    "console": "ships on PS5/Xbox/Switch (TRC/XR/Lotcheck cert applies)"
+  },
+  "profiles": {
+    "prototype":         ["gameplay", "content", "levels"],
+    "sp-vertical-slice": ["gameplay", "content", "levels", "narrative", "audio", "build", "steam"],
+    "mp-game":           ["gameplay", "content", "levels", "audio", "multiplayer", "build", "steam"],
+    "live-game":         ["gameplay", "content", "levels", "narrative", "audio", "multiplayer", "monetization", "build", "steam"]
+  },
+  "stages": {
+    "$comment": "Ordered lifecycle. Transitions ONLY happen through greenlight/gate waves, which append to config.json's stage_history. Waves declare which stages they run in; out-of-stage waves self-skip. concept + preproduction run in a docs-only repo (no .uproject until scaffold-wave, which preproduction-exit triggers).",
+    "order": ["concept", "preproduction", "vertical-slice", "production", "alpha", "beta", "gold", "live"],
+    "gates": {
+      "concept -> preproduction":    "concept-greenlight-wave (pass/redesign/kill vs pitch + prototype verdict)",
+      "preproduction -> vertical-slice": "preproduction-exit-wave (GDD + macro design + tech plan locked; triggers scaffold-wave)",
+      "vertical-slice -> production": "slice-greenlight-wave (verdict strictly against criteria locked by slice-criteria-wave)",
+      "production -> alpha":         "alpha-gate-wave (feature complete, zero Cat-A defects)",
+      "alpha -> beta":               "beta-gate-wave (content complete after content-lock-wave; debug-only regime)",
+      "beta -> gold":                "rc-wave (100% Sev-1 / 90% Sev-2 / 85% Sev-3 fixed; cert-preflight go)",
+      "gold -> live":                "release-wave ready + HUMAN publishes (the harness never presses release)"
+    }
+  },
+  "staffing": {
+    "$comment": "Studio scale — controls how far waves fan out. Waves always address ROLES; at smaller scales several roles are played by one agent. Merge order (which specialists collapse first, per industry research): editor->writer, encounter->level, economy->systems, ux+ui->one, vfx+lighting->art-tech, composer+sound->audio-designer, build->tools, CD+GD->design-director.",
+    "scales": ["solo", "indie", "studio"],
+    "merges": {
+      "solo": {
+        "design-systems": "design-director", "design-combat": "design-director", "design-economy": "design-director",
+        "design-level": "design-director", "design-ux": "design-director", "design-technical": "design-director",
+        "eng-ui": "eng-gameplay", "eng-network": "eng-gameplay", "eng-tools": "eng-gameplay", "eng-build": "eng-gameplay",
+        "art-concept": "art-director", "art-tech": "art-director", "art-vfx": "art-director", "art-lighting": "art-director", "art-ui": "art-director",
+        "audio-technical": "audio-designer", "narrative-writer": "narrative-designer",
+        "liveops-producer": "release-manager", "community-writer": "release-manager"
+      },
+      "indie": {
+        "design-combat": "design-systems", "design-economy": "design-systems", "design-ux": "design-technical",
+        "eng-network": "eng-gameplay", "eng-build": "eng-tools",
+        "art-vfx": "art-tech", "art-lighting": "art-tech", "art-ui": "art-concept",
+        "audio-technical": "audio-designer", "narrative-writer": "narrative-designer",
+        "community-writer": "liveops-producer"
+      },
+      "studio": {}
+    }
+  }
+}

@@ -8,7 +8,7 @@
 
 Run this interview before any greenlight or `/ship` that defines a new gameplay system. Ask every section in order. Pause after each section and wait for the answer before continuing. Do not batch sections.
 
-Output: a completed `docs/REFERENCE_ANALYSIS.md` in the project repo. This document is live — update it as the project evolves. It becomes the "what does winning feel like" benchmark for the [playtest-architect](../agents/playtest-architect.md).
+Output: a completed `docs/REFERENCE_ANALYSIS.md` in the project repo. This document is live — update it as the project evolves. It becomes the "what does winning feel like" benchmark for the [qa-lead](../agents/qa-lead.md).
 
 ---
 
@@ -67,7 +67,7 @@ Ask:
 
 > What does [game] do that you explicitly do not want in this project? Common answers: floaty movement, excessive ragdoll, intrusive tutorial prompts, damage number clutter, stamina punishing enough to stop fun, excessive loot drops.
 
-Record these as **anti-patterns**. The [code-reviewer](../agents/code-reviewer.md) and [playtest-architect](../agents/playtest-architect.md) will flag implementations that trend toward them.
+Record these as **anti-patterns**. The [eng-director](../agents/eng-director.md) and [qa-lead](../agents/qa-lead.md) will flag implementations that trend toward them.
 
 ---
 
@@ -107,7 +107,7 @@ Record observable behaviors:
 
 > What features from the reference games are out of scope for the vertical slice? We need a kept-out list to prevent scope creep.
 
-Record as `out_of_scope[]`. Anything on this list requires an explicit "yes, add this" decision — the [gameplay-systems-engineer](../agents/gameplay-systems-engineer.md) and [blueprint-feature-builder](../agents/blueprint-feature-builder.md) will not implement it otherwise.
+Record as `out_of_scope[]`. Anything on this list requires an explicit "yes, add this" decision — the [eng-gameplay](../agents/eng-gameplay.md) and [design-technical](../agents/design-technical.md) will not implement it otherwise.
 
 ---
 
@@ -148,7 +148,7 @@ For each top anti-pattern, agree on a concrete gate:
 | Tutorial interruption | Functional test: count `UCommonActivatableWidget` activations in first 5 min | Gate: ≤ 2 unprompted tutorial pushes |
 | Damage number clutter | Screen density audit in PIE | Max 5 simultaneous `WB_VFX_DamageNumber` instances visible |
 
-Document agreed gates in `docs/REFERENCE_ANALYSIS.md` under **Anti-Pattern Gates**. The [playtest-architect](../agents/playtest-architect.md) converts these into Gauntlet test assertions.
+Document agreed gates in `docs/REFERENCE_ANALYSIS.md` under **Anti-Pattern Gates**. The [qa-lead](../agents/qa-lead.md) converts these into Gauntlet test assertions.
 
 ---
 
@@ -215,9 +215,9 @@ After writing `docs/REFERENCE_ANALYSIS.md`, update `project.config.json`:
 
 Once `docs/REFERENCE_ANALYSIS.md` exists:
 
-- **[gameplay-systems-engineer](../agents/gameplay-systems-engineer.md)** — reads the GAS mapping table. Implements `UAttributeSet`, `UGameplayAbility`, and `UGameplayEffect` classes that match the feel targets.
-- **[playtest-architect](../agents/playtest-architect.md)** — reads money moment, success/failure indicators, and anti-pattern gates. Converts them into Functional Test assertions and manual playtest observation scripts.
-- **[blueprint-feature-builder](../agents/blueprint-feature-builder.md)** — reads sensory feel targets. Applies camera shake presets, hit-stop durations, VFX scale curves, and audio Wwise event triggers to match the described feel.
-- **[level-encounter-designer](../agents/level-encounter-designer.md)** — reads money moment. Blockouts the encounter or combat arena that gives the player the best chance to discover it.
+- **[eng-gameplay](../agents/eng-gameplay.md)** — reads the GAS mapping table. Implements `UAttributeSet`, `UGameplayAbility`, and `UGameplayEffect` classes that match the feel targets.
+- **[qa-lead](../agents/qa-lead.md)** — reads money moment, success/failure indicators, and anti-pattern gates. Converts them into Functional Test assertions and manual playtest observation scripts.
+- **[design-technical](../agents/design-technical.md)** — reads sensory feel targets. Applies camera shake presets, hit-stop durations, VFX scale curves, and audio Wwise event triggers to match the described feel.
+- **[design-level](../agents/design-level.md)** — reads money moment. Blockouts the encounter or combat arena that gives the player the best chance to discover it.
 
 Do not start any of these agents until `docs/REFERENCE_ANALYSIS.md` is committed and `project.config.json` has `design.money_moment` populated.

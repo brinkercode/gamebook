@@ -32,4 +32,4 @@ Invoke before any store UI, IAP integration, or premium currency system is built
 
 ## Output
 
-A populated `docs/MONETIZATION.md` with pay-to-win contract, currency model, cosmetics catalogue, purchase cadence, legal requirements, and platform integration notes. `microtransaction-store` recipe and `build-release-engineer` read this before store work begins.
+A populated `docs/MONETIZATION.md` with pay-to-win contract, currency model, cosmetics catalogue, purchase cadence, legal requirements, and platform integration notes. `microtransaction-store` recipe and `eng-build` read this before store work begins.

@@ -43,4 +43,4 @@ StateGroup: NarrativeZone
   States: Prologue, Act1_Exploration, Act1_Combat, Act2_MidPoint, VerticalSlice_End
 ```
 
-Give `narrative-content-author` this state list before Wwise event authoring begins.
+Give `narrative-designer` this state list before Wwise event authoring begins.

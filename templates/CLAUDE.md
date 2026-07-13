@@ -8,15 +8,19 @@
 2. `.claude/agents/README.md` — agent index + INDEX protocol + handoff convention.
 3. The `docs/*.md` listed in `task_routing` for the current task type.
 
-## Two commands
+## Commands (waves)
 
 | Size | Command | Notes |
 |---|---|---|
 | Trivial | inline edit | rename, comment, INI tweak, data table row |
-| Small | `/fix <change>` | single C++ class OR single Blueprint OR single widget OR single Data Asset; runs code-reviewer + slice gate |
-| Full feature | `/ship <feature>` | systems→content multi-agent pipeline with file-based handoffs |
+| Small | `/fix <change>` | single-surface fix-wave: one author → independent review → independent gate |
+| Full feature | `/feature <feature>` | pod feature-wave: brief → C++ systems + tests → gate → BP/level/audio → review → validate |
+| Everything else | see the catalog | `/playtest` `/level` `/narrative` `/audio-pass` `/review` `/bug-hunt` `/milestone` `/perf-budget` … plus the stage gates (`/alpha-gate` → `/beta-gate` → `/rc` → `/release`) |
 
-`/ship` and `/fix` are symlinked into `~/.claude/commands/` by `scripts/setup-claude.sh`. If they're missing, run that once.
+All commands are wave shims symlinked into `~/.claude/commands/` by the gamebook's
+`scripts/setup-claude.sh`. This project's lifecycle **stage** lives in the gamebook's
+`references/<project>/config.json` — out-of-stage waves self-skip (features freeze at alpha;
+beta+ is debug-only).
 
 ## Project Docs
 
@@ -80,14 +84,17 @@ make clean                     # Remove Binaries/, Intermediate/, Saved/Cooked/
 8. Audio events only through the designated audio subsystem — never raw `UAudioComponent::Play` from gameplay code.
 9. Update relevant `docs/*.md` when behavior changes.
 
-## Agents — `/ship` flow
+## How `/feature` flows (the flagship wave)
 
 ```
-Phase 1 (parallel):  gameplay-systems-engineer ‖ playtest-architect
-                         ↓ writes .claude/handoffs/systems.json (with systems_surface[])
-Phase 2 (parallel):  blueprint-feature-builder (reads systems.json) ‖ code-reviewer ‖ level-encounter-designer
-Phase 3 (serial):    make cook-smoke → make automation-critical → make gate
-Phase 4 (optional):  build-release-engineer if Config/, .uproject, or Plugins/ changed
+Design:     design-director → brief + testable acceptance criteria
+Build ∥:    eng-gameplay (C++ systems, systems_surface[] mandatory) ‖ qa-lead (failing tests)
+Verify:     qa-gate-verifier re-runs the gate independently (self-reports ignored; one repair)
+Integrate ∥: design-technical (BP vs systems_surface ONLY) ‖ design-level ‖ audio-designer
+Review:     eng-director (GAS/BP/replication/perf/security dimensions)
+Validate:   make cook-smoke → make automation-critical → make gate (independent)
 ```
 
-`project-scaffolder` runs once at init. Every agent: read INDEX.json first, slice-gate, write `.claude/handoffs/<agent>.json` per `.claude/agents/_shared/HANDOFF.md`.
+The wave returns a commit message — **you commit, waves never run git**. Binary assets are
+authored via editor-Python generator scripts (`skills/ue5-editor-python`), never by hand.
+Every agent reads INDEX.json first; handoff schemas live in `.claude/agents/_shared/schemas/`.

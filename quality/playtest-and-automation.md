@@ -1,6 +1,6 @@
 # Playtest & Automation
 
-> Testing layers for UE5 FPS — Functional Tests, Gauntlet scripted scenarios, manual playtest scripts, and telemetry capture. Read by `playtest-architect` on every invocation.
+> Testing layers for UE5 FPS — Functional Tests, Gauntlet scripted scenarios, manual playtest scripts, and telemetry capture. Read by `qa-lead` on every invocation.
 
 ---
 

@@ -16,13 +16,13 @@ The orchestrator polls / `jq`s the file. Subagents read prior phase files via `R
 
 ```
 .claude/handoffs/
-├── systems.json     # written by gameplay-systems-engineer  (Phase 1, gates Phase 2)
-├── playtest.json    # written by playtest-architect         (Phase 1)
-├── content.json     # written by blueprint-feature-builder  (Phase 2)
-├── level.json       # written by level-encounter-designer   (Phase 2)
-├── narrative.json   # written by narrative-content-author   (Phase 2, optional)
-├── review.json      # written by code-reviewer              (Phase 2)
-└── build.json       # written by build-release-engineer     (Phase 4, optional)
+├── systems.json     # written by eng-gameplay  (Phase 1, gates Phase 2)
+├── playtest.json    # written by qa-lead         (Phase 1)
+├── content.json     # written by design-technical  (Phase 2)
+├── level.json       # written by design-level   (Phase 2)
+├── narrative.json   # written by narrative-designer   (Phase 2, optional)
+├── review.json      # written by eng-director              (Phase 2)
+└── build.json       # written by eng-build     (Phase 4, optional)
 ```
 
 The orchestrator clears `.claude/handoffs/*` at the start of every `/ship` run.
@@ -35,7 +35,7 @@ The orchestrator clears `.claude/handoffs/*` at the start of every `/ship` run.
 {
   "schema_version": "2",
   "task_id":   "ship-2026-06-16-dash-ability",
-  "agent":     "gameplay-systems-engineer",
+  "agent":     "eng-gameplay",
   "phase":     1,
   "status":    "ready",
   "gate_result": "pass",
@@ -83,8 +83,8 @@ The orchestrator clears `.claude/handoffs/*` at the start of every `/ship` run.
   ],
   "deps_added": [],
   "downstream_needs": {
-    "blueprint-feature-builder": "Wrap GA_Dash in BP_GA_Dash; bind Niagara + Wwise on ActivateAbility; HUD listens to OnStaminaChange delegate.",
-    "playtest-architect": "Functional Test: dash twice in 2s — second must be blocked by GE_DashCooldown."
+    "design-technical": "Wrap GA_Dash in BP_GA_Dash; bind Niagara + Wwise on ActivateAbility; HUD listens to OnStaminaChange delegate.",
+    "qa-lead": "Functional Test: dash twice in 2s — second must be blocked by GE_DashCooldown."
   },
   "blockers": []
 }
@@ -96,7 +96,7 @@ The orchestrator clears `.claude/handoffs/*` at the start of every `/ship` run.
 {
   "schema_version": "2",
   "task_id":   "ship-2026-06-16-dash-ability",
-  "agent":     "gameplay-systems-engineer",
+  "agent":     "eng-gameplay",
   "phase":     1,
   "status":    "blocked",
   "gate_result": "fail",
@@ -136,7 +136,7 @@ The orchestrator clears `.claude/handoffs/*` at the start of every `/ship` run.
 | `gate.logs_tail` | if fail | Last ~50 lines of failing output. |
 | `files_changed` | yes | `[{path, op, summary}]`. `op` ∈ `add` \| `modify` \| `delete` \| `rename`. |
 | `tests_added` | yes | `[{path, covers}]`. Empty array if none. |
-| `systems_surface` | gameplay-systems-engineer only | New/changed C++ gameplay surfaces. **This is what `blueprint-feature-builder` reads to wire BPs/UMG.** See schema below. |
+| `systems_surface` | eng-gameplay only | New/changed C++ gameplay surfaces. **This is what `design-technical` reads to wire BPs/UMG.** See schema below. |
 | `decisions` | yes | One-line trade-offs. Skip the obvious. |
 | `deps_added` | yes | New top-level Plugins (engine/marketplace) or third-party SDKs. Format: `"<plugin>@<ver>: <one-sentence reason>"`. |
 | `downstream_needs` | yes | `{<agent>: <what they need from your work>}`. |
@@ -161,7 +161,7 @@ The orchestrator clears `.claude/handoffs/*` at the start of every `/ship` run.
 2. **Last chat message = JSON only.** No prose, no markdown fences, no commentary.
 3. **`status: "blocked"` is not a failure of `/ship`.** It's a clean signal to repair. Include enough in `logs_tail` and `blockers` for a focused retry.
 4. **Slice gate, not full gate.** Run `make gate STEP=lint && STEP=test` on your changed files. The orchestrator runs `STEP=all` at integration boundaries.
-5. **`systems_surface` is mandatory for gameplay-systems-engineer.** If `blueprint-feature-builder` can't read accurate UPROPERTY/UFUNCTION signatures from `.claude/handoffs/systems.json`, the systems→content handoff is broken.
+5. **`systems_surface` is mandatory for eng-gameplay.** If `design-technical` can't read accurate UPROPERTY/UFUNCTION signatures from `.claude/handoffs/systems.json`, the systems→content handoff is broken.
 6. **No new top-level Plugins without `deps_added`.** The orchestrator diffs `<Project>.uproject` `Plugins[]` against this list.
 7. **Cooked assets are not handoff artifacts.** Never commit cooked content or write paths under `Saved/`, `Intermediate/`, `DerivedDataCache/`.
 
@@ -173,10 +173,10 @@ Phase 2 agents start by reading their upstream dependencies:
 
 | Agent | Reads | Why |
 |---|---|---|
-| `blueprint-feature-builder` | `.claude/handoffs/systems.json` | UPROPERTY/UFUNCTION signatures, gameplay tags, replication mode — needed to wrap C++ in BP, bind delegates, wire UMG |
-| `level-encounter-designer` | `.claude/handoffs/systems.json` | Ability/component classes to place on AI pawns and encounter actors |
-| `narrative-content-author` | `.claude/handoffs/{systems,content}.json` | Trigger volumes and BP event hooks for story beats and audio logs |
-| `code-reviewer` | `.claude/handoffs/{systems,playtest,content,level}.json` + git diff | Knows what to review, who decided what |
-| `build-release-engineer` | `.claude/handoffs/{systems,content,level}.json` + git diff | Knows whether `.uproject`/`Config/`/`Plugins/` changed enough to recook |
+| `design-technical` | `.claude/handoffs/systems.json` | UPROPERTY/UFUNCTION signatures, gameplay tags, replication mode — needed to wrap C++ in BP, bind delegates, wire UMG |
+| `design-level` | `.claude/handoffs/systems.json` | Ability/component classes to place on AI pawns and encounter actors |
+| `narrative-designer` | `.claude/handoffs/{systems,content}.json` | Trigger volumes and BP event hooks for story beats and audio logs |
+| `eng-director` | `.claude/handoffs/{systems,playtest,content,level}.json` + git diff | Knows what to review, who decided what |
+| `eng-build` | `.claude/handoffs/{systems,content,level}.json` + git diff | Knows whether `.uproject`/`Config/`/`Plugins/` changed enough to recook |
 
 If a required handoff is missing or `status != "ready"`, the downstream agent must refuse to proceed and emit its own `status: "blocked"` with a clear blocker explaining what's missing.

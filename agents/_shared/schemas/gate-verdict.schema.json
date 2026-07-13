@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "qa-gate-verifier verdict",
+  "description": "The ONLY verdict that advances a wave past a build step. Produced by an independent qa-gate-verifier that re-runs the gate against the author's changed files and ignores any self-reported gate_result.",
+  "type": "object",
+  "required": ["result", "steps"],
+  "properties": {
+    "result": { "type": "string", "enum": ["pass", "fail"] },
+    "steps": {
+      "type": "array",
+      "description": "each gate step actually run (lint, build, automation-critical, cook-smoke, gauntlet, index)",
+      "items": {
+        "type": "object",
+        "required": ["step", "result"],
+        "properties": {
+          "step": { "type": "string" },
+          "result": { "type": "string", "enum": ["pass", "fail", "skip"] }
+        }
+      }
+    },
+    "failed_step": { "type": ["string", "null"] },
+    "logs_tail": { "type": ["string", "null"], "description": "last ~50 lines of the first failing step" },
+    "self_report_matched": { "type": ["boolean", "null"], "description": "did the author's self-reported gate_result match reality? (audit signal; not used for gating)" }
+  }
+}

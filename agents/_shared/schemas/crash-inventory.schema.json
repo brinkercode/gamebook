@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "qa-crash-correlator inventory",
+  "description": "Structured crash/failure inventory parsed from UE logs, callstacks, ensure/check output, and automation failure logs. Read-only parsing — no root-causing, no fixing; qa-bug-hunter consumes this.",
+  "type": "object",
+  "required": ["crashes"],
+  "properties": {
+    "crashes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["signature", "kind"],
+        "properties": {
+          "signature": { "type": "string", "description": "deduped identity: top user-code frame + exception type" },
+          "kind": { "type": "string", "enum": ["crash", "check", "ensure", "automation-failure", "cook-error", "gc-error"] },
+          "count": { "type": "integer" },
+          "callstack_top": { "type": "array", "items": { "type": "string" }, "description": "top ~5 frames, engine frames trimmed" },
+          "suspected_module": { "type": "string", "description": "game module/subsystem the top user frame belongs to" },
+          "first_seen": { "type": "string", "description": "log/build identifier where this signature first appears" },
+          "log_excerpt": { "type": "string" }
+        }
+      }
+    },
+    "sources_parsed": { "type": "array", "items": { "type": "string" } },
+    "unparsed_failures": { "type": "integer", "description": "failures that didn't match any pattern — never silently dropped" }
+  }
+}

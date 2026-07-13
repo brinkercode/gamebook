@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "greenlight panel verdict",
+  "description": "Stage-transition verdict (concept-greenlight, preproduction-exit, slice-greenlight, alpha/beta gates). pass/redesign/kill — denial is a normal outcome, not an error. Runs on the greenlight tier for the three project-fate gates. Verdict is judged STRICTLY against criteria agreed before the work was built.",
+  "type": "object",
+  "required": ["verdict", "criteria"],
+  "properties": {
+    "verdict": { "type": "string", "enum": ["pass", "redesign", "kill"] },
+    "criteria": {
+      "type": "array",
+      "description": "each pre-agreed acceptance criterion, individually judged",
+      "items": {
+        "type": "object",
+        "required": ["criterion", "met"],
+        "properties": {
+          "criterion": { "type": "string" },
+          "met": { "type": "boolean" },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "rationale": { "type": "string", "description": "the panel's reasoning, answer-first" },
+    "conditions": { "type": "array", "items": { "type": "string" }, "description": "for pass-with-conditions: what must be true before the next gate" },
+    "redesign_directives": { "type": "array", "items": { "type": "string" }, "description": "for redesign: what specifically to change before resubmitting" },
+    "next_stage": { "type": ["string", "null"], "description": "the stage this verdict advances to on pass; null on redesign/kill" }
+  }
+}

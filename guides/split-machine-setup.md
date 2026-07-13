@@ -117,7 +117,7 @@ For IAP testing without hitting Steam, run a local mock receipt-validator:
 # Example: Go stub at homelab:8443 that always returns "valid"
 cd ~/services/mock-iap && go run main.go    # or systemd unit
 ```
-Point your `gameplay-systems-engineer`-built `URequestReceiptValidation` at `http://<homelab-ip>:8443` during development.
+Point your `eng-gameplay`-built `URequestReceiptValidation` at `http://<homelab-ip>:8443` during development.
 
 ---
 
