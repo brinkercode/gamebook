@@ -1,0 +1,34 @@
+# ── Unreal Engine build artifacts (never commit) ──────────────
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+Build/
+!Build/*/  # keep platform Build config dirs if a project adds them intentionally
+
+# ── IDE / tooling ─────────────────────────────────────────────
+.vs/
+.vscode/
+.idea/
+*.VC.db
+*.VC.opendb
+*.opensdf
+*.sdf
+*.sln
+*.suo
+*.xcodeproj
+*.xcworkspace
+
+# ── OS cruft ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Local, machine-specific, and secrets ──────────────────────
+.env
+*.local
+.claude/settings.local.json
+.claude/handoffs/*.json
+!.claude/handoffs/.gitkeep
+
+# Content binaries are tracked via Git LFS (see .gitattributes) — do NOT ignore Content/.
